@@ -1,0 +1,69 @@
+%% Set default \includegraphics figure.
+\usepackage{graphicx}
+\graphicspath{
+  {figures/}
+  {figures/inkscape/}
+}
+
+%% Support side captions.
+\usepackage{caption}
+\usepackage{floatrow}
+
+\DeclareCaptionLabelSeparator{slash}{%
+  \hspace{0.25em}/\hspace{0.25em}%
+}
+
+\captionsetup{
+  font          = {small, stretch=1.25},
+  indention     = 0.6em,
+  labelfont     = {sf, bf},
+  labelsep      = slash,
+  labelformat   = simple,
+  tableposition = bottom,
+  parskip       = .3\baselineskip plus 1pt,
+}
+
+\floatsetup[figure]{
+  capbesideposition = {right, center},
+  capbesidesep = quad,
+}
+
+\makeatletter
+\newcommand*{\redefineparboxrestore}{%
+  \def\@arrayparboxrestore{%
+    \let\if@nobreak\iffalse
+    \let\if@noskipsec\iffalse
+    \let\par\@@par
+    \let\-\@dischyph
+    \let\'\@acci\let\`\@accii\let\=\@acciii
+    \parindent\z@ \parskip\z@skip
+    \textwidth\hsize
+    \@totalleftmargin\z@
+    \leftskip\z@skip \rightskip\z@skip \@rightskip\z@skip
+    \parfillskip\@flushglue
+    \lineskip\normallineskip
+    \lineskiplimit\normallineskiplimit
+    \baselineskip\normalbaselineskip
+    \sloppy
+  }%
+}
+\NewCommandCopy{\fcapsideOrig}{\fcapside}
+\RenewDocumentCommand{\fcapside}{O{\FBwidth} >{\TrimSpaces}+m >{\TrimSpaces}+m}{%
+  \redefineparboxrestore%
+  \fcapsideOrig[#1]{#2}{#3}%
+}
+\makeatother
+
+%% Support subfigure.
+\usepackage{subcaption}
+
+%% Set the counter for figures, tables, and equations to be per section.
+\newcounter{figtabeq}[section]
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\theequation}{\arabic{equation}}
+\makeatletter
+\let\c@figure\c@figtabeq
+\let\c@table\c@figtabeq
+\let\c@equation\c@figtabeq
+\makeatother
