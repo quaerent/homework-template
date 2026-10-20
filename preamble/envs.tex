@@ -10,7 +10,6 @@
 %   #7 - (optional) the Cref plural name (defaults to #6 + 's')
 \NewDocumentCommand{\newtheoremalias}{m m O{} O{\MakeLowercase{#2}} O{#4s} O{#2} O{#6s}}{%
   \newkeytheorem{#1}[
-    sibling=table,
     title={#2},
     qed={#3},
   ]
